@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-alloc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-alloc
+  template:
+    metadata:
+      labels:
+        app: static-alloc
+    spec:
+      containers:
+      - name: name
+        image: nginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: volume
+          mountPath: /pvc/
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: static-alloc-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: static-alloc-pvc
+  labels:
+    # insert any desired labels to identify your claim
+    app: static-alloc
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      # The amount of the volume's storage to request
+      storage: 2Gi

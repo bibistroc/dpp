@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+data:
+  dummy_value1: "dummy_value1"
+  dummy_value2: "dummy_value2"
+  file1.txt: |
+    contents of file 1
+    more contents
+  file2.txt: |
+    contents of file 2
+    more contents

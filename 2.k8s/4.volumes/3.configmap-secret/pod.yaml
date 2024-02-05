@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-container
+    image: nginx:1.14.2
+    env:
+    - name: DUMMY_VALUE1
+      valueFrom:
+        configMapKeyRef:
+          name: test-configmap
+          key: dummy_value1
+    - name: DUMMY_VALUE2
+      valueFrom:
+        configMapKeyRef:
+          name: test-configmap
+          key: dummy_value2
+    volumeMounts:
+    - name: configmaps
+      mountPath: "/files"
+    - name: secrets
+      mountPath: "/secrets"
+      readOnly: true
+  volumes:
+  - name: configmaps
+    configMap:
+      name: test-configmap
+      items:
+      - key: "file1.txt"
+        path: "file1.txt"
+      - key: "file2.txt"
+        path: "file2.txt"
+  - name: secrets
+    secret:
+      secretName: test-secret
