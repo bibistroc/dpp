@@ -1,0 +1,3 @@
+[submodule "4.flux/demo-fluxcd"]
+	path = 4.flux/demo-fluxcd
+	url = git@github.com:bibistroc/demo-fluxcd.git
